@@ -1,2 +1,2 @@
-# encoding-practice
-Use correct encoding to fix XSS issues
+# encoding lab
+Learn when to apply which type of encoding to avoid reflective XSS bugs
