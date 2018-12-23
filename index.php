@@ -23,7 +23,7 @@
 </div>
 
 <div class="container">
-    <h1>Challenge <?= $challenge_no ?></h1>
+    <h1>Challenge</h1>
 
 <?php
 
@@ -88,12 +88,11 @@ function isValidEmail($email) {
  <div class="panel-body">
 <?php
 $email = $_GET['email'];
-echo isValidEmail($email);
 if ($email && isValidEmail($email)) {
     echo '<div class="alert alert-warning" align="center">User with e-mail <strong>' . encode($email) . '</strong> not found!</div>';
 }
 ?>
-<h3 class="container">Login</h3>
+<h3 align="center">Login</h3>
 
         <form method="get" class="form-horizontal" action="."> 
 <?php
