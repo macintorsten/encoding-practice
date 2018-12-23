@@ -140,7 +140,7 @@ if (isset($_GET['email']) && !isValidEmail($_GET['email'])) {
                 </div>
             </div>
             <div class="form-group" align="center">
-                <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
+                <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
             </div>
             </form>
         </div>
