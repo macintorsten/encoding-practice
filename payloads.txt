@@ -1,0 +1,8 @@
+hej.abc
+index.php?email=adsf
+index.php?email=lol0
+index.php?email=lol1
+index.php?email=one%40two.com%40%22><svg/onload=alert()>
+index.php?email=lol2
+index.php?email=lol3
+index.php?email=lol4

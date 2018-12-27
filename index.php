@@ -1,48 +1,30 @@
-<!doctype html>
-
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="Pragma" content="no-cache">
-
-    <title>Challenge</title>
-
-    <script src="js/lib.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-        crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-</head>
-
-<body>
-
-    <div class="alert alert-success" role="alert" id="success" style="display: none;">
-        <h4 class="alert-heading">Well done!</h4>
-        <p>You successfully found the XSS. To complete the challenge you need to implement <code>encode($email)</code>
+<?php
+$HELP = <<<MSG
+    <ul>
+    <li>Fill in the form and see if you can find a reflected XSS, look at the source code if you need hint.</li>
+<li>Identify where the parameter is reflected in the HTML source code. What mistake makes the page vulnerable?</li>
+<li>Fix the issue by applying the correct encoding in the PHP code.</li>
+    </ul>
+MSG;
+$HINTS = "Look at <em>TODO:</em> in <code>isValidEmail</code> for hints how to bypass e-mail filter.";
+$SUCCESS = <<<MSG
+        You successfully found the XSS. To complete the challenge you need to implement <code>encode($email)</code>
             function in <strong>index.php</strong> to so it applies the correct encoding before echoing the e-mail. Do
-            not assume any particular input validation.</p>
-    </div>
+            not assume any particular input validation.
+MSG;
+$PAYLOADS_FILE = "payloads.txt";
 
-    <div class="container">
-        <h1>Challenge</h1>
+include './challenge_top.php';
+?>
 
-        <?php
+<h3 align="center">Login</h3>
 
+<?php
 // Implement this
 // return htmlentities($email);
 function encode($email) {
     return $email;
 }
-
-?>
-
-        <?php
 
 function isValidEmail($email) {
     // Must contain a '@'
@@ -73,41 +55,14 @@ function isValidEmail($email) {
     return true;
 }
 
-?>
-
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#info"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
-    <li class="glyphicaon glyphicaon-eye-open"><a data-toggle="tab" href="#hints"><span class="glyphicon glyphicon-eye-open"></span> Hints</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="info" class="tab-pane fade in active">
-    <ul>
-    <li>Fill in the form below and see if you can find a reflected XSS, look at the source code if you need hint.</li>
-<li>Identify where the parameter is reflected in the HTML source code. What mistake makes the page vulnerable?</li>
-<li>Fix the issue by applying the correct encoding in the PHP code.</li>
-    </ul>
-    </div>
-    <div id="hints" class="tab-pane fade">
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-  </div>
-
-        <div class="panel panel-primary">
-
-
-
-            <div class="panel-heading">PHP: <em>challenge_1.php</em></div>
-            <div class="panel-body">
-                <?php
 if (isset($_GET['email']) && isValidEmail($_GET['email'])) {
     echo '<div class="alert alert-warning" align="center">User with e-mail <strong>' . encode($_GET['email']) . '</strong> not found!</div>';
 }
 ?>
-                <h3 align="center">Login</h3>
 
-                <form method="get" class="form-horizontal" action=".">
-                    <?php
+
+<form method="get" class="form-horizontal" action=".">
+<?php
 if (isset($_GET['email']) && !isValidEmail($_GET['email'])) {
     echo '<div class="form-group has-warning">';
 } else {
@@ -143,15 +98,7 @@ if (isset($_GET['email']) && !isValidEmail($_GET['email'])) {
                 <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
             </div>
             </form>
-        </div>
-    </div>
 
-
-
-
-
-    </div>
-
-</body>
-
-</html>
+<?php
+include './challenge_bottom.php';
+?>
