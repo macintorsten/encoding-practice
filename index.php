@@ -1,4 +1,5 @@
 <?php
+
 $HELP = <<<MSG
     <ul>
     <li>Fill in the form and see if you can find a reflected XSS, look at the source code if you need hint.</li>
@@ -8,7 +9,7 @@ $HELP = <<<MSG
 MSG;
 $HINTS = "Look at <em>TODO:</em> in <code>isValidEmail</code> for hints how to bypass e-mail filter.";
 $SUCCESS = <<<MSG
-        You successfully found the XSS. To complete the challenge you need to implement <code>encode($email)</code>
+        You successfully found the XSS. To complete the challenge you need to implement <code>encode(\$email)</code>
             function in <strong>index.php</strong> to so it applies the correct encoding before echoing the e-mail. Do
             not assume any particular input validation.
 MSG;

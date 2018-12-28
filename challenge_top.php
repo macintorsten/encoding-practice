@@ -66,7 +66,7 @@ header("X-XSS-Protection: 0");
     </div>
     <div id="check" class="tab-pane fade">
         <p class="container">
-            <a href="javascript:try_payloads('<?= $PAYLOADS_FILE ?> ', 'check_log')">Click here to check for XSS</a>
+            <a href="javascript:PerformXSSCheck()">Click here to check for XSS</a>
         </p>
         <ul id="check_log">
         </ul>

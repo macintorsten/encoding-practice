@@ -18,65 +18,63 @@
   };
 })(window.alert);
 
-function XSSCallback(event) {
-  console.log("XSS: " + event.data);
-}
-
-function XSSCheck(log) {
-  return (function() {
-    li = document.createElement('li');
-    if (this.contentWindow.XSS === true) {
-      li.className = "list-group-item list-group-item-danger glyphicon glyphicon-exclamation-sign";
+// Detect when automatic xss probe is successful
+function probe(url) {
+  return new Promise(function(resolve, reject) {
+    function iframeLoadCallback(event) {
+      let is_xss = this.contentWindow.XSS || false;
+      let xss_result = {vector: url, xss: is_xss};
+      resolve(xss_result);
     }
-    else {
-      li.className = "list-group-item list-group-item-success glyphicon glyphicon-ok-circle";
-    }
-    link = document.createElement('a');
-    link.href = this.src;
-    link.innerText = " " + this.src;
-    li.appendChild(link)
-    log.appendChild(li);
-    document.body.removeChild(this);
+    iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.style = "display: none;";
+    iframe.addEventListener("load", iframeLoadCallback);
+    document.body.appendChild(iframe);
   })
 }
 
-// Detect when automatic xss probe is successful
-function probe_single(url, log) {
-  iframe = document.createElement('iframe');
-  iframe.src = url;
-  iframe.style = "display: none;";
-  iframe.addEventListener("load", XSSCheck(log));
-  document.body.appendChild(iframe);
-}
-
 // Probe mutliple payloads
-function probe_multi(payloads, log) {
-  //window.addEventListener("message", XSSCallback, false);
-
-  payloads.forEach(element => {
-    console.log("Testing " + element);
-    probe_single(element, log);
+function test_payloads(payloads) {
+  return payloads.map(async function(url) {
+    console.log("Testing " + url);
+    result_prom = probe(url);
+    console.log(result_prom);
+    return result_prom;
   });
-
 }
 
-// Get payloads
-function try_payloads(payloads_file, log_id) {
-  log = document.getElementById(log_id);
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", payloads_file, true);
-  xhr.onload = function (e) {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        var payloads = xhr.responseText.split('\n');
-        probe_multi(payloads, log);
-      } else {
-        console.error(xhr.statusText);
-      }
-    }
-  };
-  xhr.onerror = function (e) {
-    console.error(xhr.statusText);
-  };
-  xhr.send(null);
+function PerformXSSCheck() {
+  // Get payloads
+  fetch('payloads.txt')
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(text) {
+    return text.split('\n');
+  })
+  .then(async function(payloads) {
+    let checks = test_payloads(payloads);
+    checks.forEach(async function(result) {
+      let xss_result = await result;
+      addXSSResult(xss_result);
+    });
+  })
+
+async function addXSSResult(result) {
+  li = document.createElement('li');
+
+  if (result.xss === true) {
+      li.className = "list-group-item list-group-item-danger glyphicon glyphicon-exclamation-sign";
+  }
+  else {
+      li.className = "list-group-item list-group-item-success glyphicon glyphicon-ok-circle";
+  }
+  link = document.createElement('a');
+  link.href = result.vector;
+  link.innerText = " " + result.vector;
+  li.appendChild(link)
+  log = document.getElementById('check_log');
+  log.appendChild(li);
+  }
 }
