@@ -1,25 +1,7 @@
 <?php
-
-$HELP = <<<MSG
-    <ul>
-    <li>Fill in the form and see if you can find a reflected XSS, look at the source code if you need hint.</li>
-<li>Identify where the parameter is reflected in the HTML source code. What mistake makes the page vulnerable?</li>
-<li>Fix the issue by applying the correct encoding in the PHP code.</li>
-    </ul>
-MSG;
-$HINTS = "Look at <em>TODO:</em> in <code>isValidEmail</code> for hints how to bypass e-mail filter.";
-$SUCCESS = <<<MSG
-        You successfully found the XSS. To complete the challenge you need to implement <code>encode(\$email)</code>
-            function in <strong>index.php</strong> to so it applies the correct encoding before echoing the e-mail. Do
-            not assume any particular input validation.
-MSG;
-$PAYLOADS_FILE = "payloads.txt";
-
-include './includes/challenge_top.inc';
+include './includes/challenge_top.php';
 ?>
-
 <h3 align="center">Login</h3>
-
 <?php
 // Implement this
 // return htmlentities($email);
@@ -101,5 +83,5 @@ if (isset($_GET['email']) && !isValidEmail($_GET['email'])) {
             </form>
 
 <?php
-include './includes/challenge_bottom.inc';
+include './includes/challenge_bottom.php';
 ?>

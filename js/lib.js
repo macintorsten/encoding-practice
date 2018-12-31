@@ -104,7 +104,7 @@ function PerformXSSCheck() {
       let url = item[1];
       console.log("Probing URL " + url);
       pendingProbeElement(id, url);
-      result_prom = probe(url, 3600);
+      result_prom = probe(url, 2500);
       let xss_result = await result_prom;
       updateProbeResult(id, xss_result);
       return result_prom;
@@ -140,3 +140,26 @@ async function updateProbeResult(id, result) {
       li.className = "list-group-item list-group-item-success glyphicon glyphicon-thumbs-up";
   }
 }
+
+// Init and set stuff
+window.onload = (function () {
+
+  // force-cache?
+  fetch('/challenges.json', {cache: "force-cache"})
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function (all_challenges) {
+    filename = location.pathname.split('/').pop();
+    challenge = all_challenges.find((c) => c.filename === filename);
+    document.getElementById("title").innerText = challenge.title;
+    document.getElementById("header").innerText = challenge.title
+    document.getElementById("filename").innerText = challenge.filename;
+    document.getElementById("hints_container").innerHTML = challenge.hints;
+    document.getElementById("help_container").innerHTML = challenge.help;
+    document.getElementById("success").innerHTML = challenge.success;
+    //challenge.payloads
+    //challenge.search 
+  });
+
+})
