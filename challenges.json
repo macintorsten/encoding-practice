@@ -1,7 +1,7 @@
 [ 
     {
     "title": "Bypass e-mail verification",
-    "filename": "index.php",
+    "filename": "email_verification.php",
     "search": "?email=e%40mail.com&pwd=pass&remember=on&submit=Submit",
     "help": "<ul> <li>Fill in the form and see if you can find a reflected XSS, look at the source code if you need hint.</li> <li>Identify where the parameter is reflected in the HTML source code. What mistake makes the page vulnerable?</li> <li>Fix the issue by applying the correct encoding in the PHP code.</li> </ul>",
     "hints": "Look at <em>TODO:</em> in <code>isValidEmail</code> for hints how to bypass e-mail filter.",

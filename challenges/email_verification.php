@@ -1,7 +1,9 @@
 <?php
-include './includes/challenge_top.php';
+include '../includes/challenge_top.php';
 ?>
+
 <h3 align="center">Login</h3>
+
 <?php
 // Implement this
 // return htmlentities($email);
@@ -43,7 +45,6 @@ if (isset($_GET['email']) && isValidEmail($_GET['email'])) {
 }
 ?>
 
-
 <form method="get" class="form-horizontal" action=".">
 <?php
 if (isset($_GET['email']) && !isValidEmail($_GET['email'])) {
@@ -83,5 +84,5 @@ if (isset($_GET['email']) && !isValidEmail($_GET['email'])) {
             </form>
 
 <?php
-include './includes/challenge_bottom.php';
+include '../includes/challenge_bottom.html';
 ?>

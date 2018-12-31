@@ -116,13 +116,10 @@ function PerformXSSCheck() {
 function pendingProbeElement(id, url) {
   li = document.createElement('li');
   li.id = "probe" + id;
-
   li.className = "list-group-item list-group-item-warning glyphicon glyphicon-hourglass";
-
   link = document.createElement('a');
   link.href = url;
   link.innerText = " " + url;
-
   li.appendChild(link);
   log = document.getElementById('check_log');
   log.appendChild(li);
@@ -132,7 +129,6 @@ function pendingProbeElement(id, url) {
 async function updateProbeResult(id, result) {
   id = "probe" + id;
   li = document.getElementById(id);
-
   if (result.xss === true) {
       li.className = "list-group-item list-group-item-danger glyphicon glyphicon-thumbs-down";
   }
