@@ -15,7 +15,7 @@ $SUCCESS = <<<MSG
 MSG;
 $PAYLOADS_FILE = "payloads.txt";
 
-include './challenge_top.php';
+include './includes/challenge_top.inc';
 ?>
 
 <h3 align="center">Login</h3>
@@ -101,5 +101,5 @@ if (isset($_GET['email']) && !isValidEmail($_GET['email'])) {
             </form>
 
 <?php
-include './challenge_bottom.php';
+include './includes/challenge_bottom.inc';
 ?>

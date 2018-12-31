@@ -30,9 +30,10 @@ function probe(url, timeout=null) {
     function iframeLoadCallback(event) {
       let is_xss = this.contentWindow.XSS || false;
       let xss_result = {vector: url, xss: is_xss};
-      if (is_xss || timeout===null)
+      if (is_xss || timeout===null) {
         console.log(`XSS detected for url ${url}`);
         resolve(xss_result);
+      }
     }
     iframe = document.createElement('iframe');
     iframe.src = url;
@@ -103,7 +104,7 @@ function PerformXSSCheck() {
       let url = item[1];
       console.log("Probing URL " + url);
       pendingProbeElement(id, url);
-      result_prom = probe(url, 2500);
+      result_prom = probe(url, 3600);
       let xss_result = await result_prom;
       updateProbeResult(id, xss_result);
       return result_prom;
