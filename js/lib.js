@@ -7,8 +7,7 @@
       $('#success').show();
 
       // If in iframe, postmessage to parent to indicate successful xss - remove?
-      let win = window.opener || top;
-      if (win) {
+      if (window.self !== window.top) {
         // For now assumed that vector is GET-based and calling window is window.opener or top
         let xss_result = {vector: window.location.href, xss: true};
         win.postMessage(xss_result, "*");
@@ -81,7 +80,7 @@ function probe(url, timeout=null) {
 
 function PerformXSSCheck() {
   // Get payloads
-  fetch('payloads.txt')
+  fetch('/payloads.txt')
   .then(function(response) {
     return response.text();
   })

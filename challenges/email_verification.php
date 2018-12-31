@@ -1,5 +1,6 @@
 <?php
-include '../includes/challenge_top.php';
+header("X-XSS-Protection: 0");
+include '../includes/challenge_top.html';
 ?>
 
 <h3 align="center">Login</h3>
